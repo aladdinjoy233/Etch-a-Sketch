@@ -5,11 +5,63 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Etch-a-Sketch</title>
+  <title>Simple Sketching</title>
+  <link rel="shortcut icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
 
+  <main>
+
+    <!-- Left side of the page (editor stuff) -->
+    <div class="left-side">
+      <input type="checkbox" class="dark-mode-switch">
+      <div class="editor-settings">
+
+        <!-- Change color -->
+        <div class="settings">
+          <label for="change-color">Change Color</label>
+          <div class="color-change-div">
+            <label class="picker" for="change-color"></label>
+            <input type="color" name="color-picker" id="change-color" value="#174461">
+            <input type="text" name="hex-code" placeholder="#174461" maxlength="7">
+          </div>
+        </div>
+
+        <!-- Change drawing mode -->
+        <div class="settings">
+          <label>Change Drawing mode</label>
+          <div class="background-div"></div>
+          <div class="draw-change-div">
+            <button><img src="/images/lead-pencil.svg" alt=""></button>
+            <button><img src="/images/eraser.svg" alt=""></button>
+            <button><img class="lower" src="/images/format-color-fill.svg" alt=""></button>
+          </div>
+        </div>
+
+        <!-- Change grid-size -->
+        <div class="settings">
+          <label for="change-grid">Change Grid Size</label>
+          <div class="change-grid-div">
+            <input type="range" name="change-grid-size" id="change-grid" min="1" max="100" value="16">
+            <span>16x16</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right side of the page (editor stuff) -->
+    <div class="right-side">
+      <h1 class="title">Simple Sketching</h1>
+      <div class="canvas-container"></div>
+      <button class="grid-clear">Clear Canvas</button>
+    </div>
+
+  </main>
+
+  <script src="/main.js"></script>
 </body>
 
 </html>
