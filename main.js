@@ -222,4 +222,5 @@ if (window.localStorage.getItem('lastColor') !== null) {
   colorChanger.value = lastColor;
   pickerDiv.style.backgroundColor = lastColor;
   colorInput.placeholder = lastColor;
+  color = lastColor;
 }
