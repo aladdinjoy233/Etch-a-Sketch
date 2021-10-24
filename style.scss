@@ -40,11 +40,48 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
+  transition: background-color 250ms ease, border-color 250ms ease,
+    color 250ms ease;
 }
 
 body {
   background-color: var(--main-bg);
   font-family: "Poppins", sans-serif;
+
+  &.dark {
+    .settings .draw-change-div {
+      input[type="radio"] {
+        &::before {
+          filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg)
+            brightness(91%) contrast(81%);
+        }
+
+        &:hover::before {
+          filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg)
+            brightness(94%) contrast(67%);
+        }
+
+        &:checked::before {
+          filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg)
+            brightness(94%) contrast(67%);
+        }
+      }
+    }
+
+    #color-picker {
+      &::before {
+        filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg)
+          brightness(91%) contrast(81%);
+      }
+
+      &:hover::before,
+      &:checked::before {
+        filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg)
+          brightness(94%) contrast(67%);
+      }
+    }
+  }
 }
 
 main {
@@ -64,28 +101,22 @@ button {
 .left-side {
   padding: 0 1.25rem;
   display: grid;
-  grid-template-rows: 1fr 22.5rem 1fr;
+  // grid-template-rows: 1fr 22.5rem 1fr;
+  grid-template-rows: 8.125rem 22.5rem 1fr;
   border-right: 1px solid var(--main-secondary);
 
-  .dark-mode-switch {
-    --toggle-color: #51473a;
-    --back-side-color: #cbbdac;
-    --hover-back-side-color: #998d7f;
-
+  // Switch checkbox styles
+  .dark-mode-switch,
+  .grid-toggle-switch {
     appearance: none;
     width: 4.25rem;
     height: 2.125rem;
-    background-color: var(--back-side-color);
     border-radius: 5rem;
     align-self: flex-start;
     position: relative;
     cursor: pointer;
 
     transition: background-color 0.15s ease;
-
-    &:hover {
-      background-color: var(--hover-back-side-color);
-    }
 
     &::after {
       content: "";
@@ -94,8 +125,29 @@ button {
       left: 0;
       width: 50%;
       height: 100%;
-      background-color: var(--toggle-color);
       border-radius: 50%;
+      transform: translateX(var(--x, 0));
+    }
+
+    &:checked {
+      --x: 100%;
+    }
+  }
+
+  .dark-mode-switch {
+    --toggle-color: #51473a;
+    --back-side-color: #cbbdac;
+    --hover-back-side-color: #998d7f;
+
+    margin-top: 1.3rem;
+    background-color: var(--back-side-color);
+
+    &:hover {
+      background-color: var(--hover-back-side-color);
+    }
+
+    &::after {
+      background-color: var(--toggle-color);
       background-image: url("/images/Dark\ Toggle.svg");
       background-size: 60%;
       background-position: center;
@@ -107,7 +159,6 @@ button {
     }
 
     &:checked {
-      --x: 100%;
       --toggle-color: #d8cbb9;
       --back-side-color: #5e5345;
       --hover-back-side-color: #6f655a;
@@ -149,6 +200,12 @@ button {
         width: 5.25rem;
         height: 5.25rem;
         border-radius: 50%;
+        cursor: pointer;
+        transition: border 150ms ease;
+
+        &:hover {
+          border: 6px solid var(--main-dark);
+        }
       }
 
       input[type="color"] {
@@ -174,49 +231,90 @@ button {
           color: var(--main-secondary);
         }
       }
+
+      .seperation-div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 0.4rem;
+      }
     }
 
     // Drawing mode changer
     .draw-change-div {
       display: flex;
       gap: 1.125rem;
+      position: relative;
 
-      button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        border-radius: 1rem;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-
+      input[type="radio"] {
+        appearance: none;
         width: 4rem;
         height: 4rem;
+        // background: rgb(255, 255, 255);
+        position: relative;
+        border-radius: 1rem;
 
-        img {
-          width: 2.5rem;
-          height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+
+        &::before {
+          content: "";
+          position: relative;
+          top: 0;
+          left: 0;
+          width: 2.8rem;
+          height: 2.8rem;
+          // background-color: red;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100%;
           filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg)
             brightness(94%) contrast(67%);
           transition: filter 0.2s;
         }
 
-        img.lower {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-35%);
+        &:hover {
+          &::before {
+            filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg)
+              brightness(91%) contrast(81%);
+          }
         }
 
-        &:hover {
-          background-color: white;
-
-          img {
+        &:checked {
+          &::before {
             filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg)
               brightness(91%) contrast(81%);
           }
         }
       }
+
+      #drawRadio::before {
+        background-image: url("/images/lead-pencil.svg");
+      }
+
+      #eraseRadio::before {
+        background-image: url("/images/eraser.svg");
+      }
+
+      #fillRadio::before {
+        background-image: url("/images/format-color-fill.svg");
+        top: 0.4rem;
+      }
+    }
+
+    .background-div {
+      width: 4rem;
+      height: 4rem;
+      background-color: var(--text-field);
+      border-radius: 1rem;
+      position: absolute;
+      top: 0;
+      transform: translateX(0);
+      transition: transform 250ms cubic-bezier(0.57, 0.05, 0.04, 1.51);
     }
 
     // Grid changer
@@ -283,6 +381,75 @@ button {
       }
     }
   }
+
+  .grid-toggle {
+    align-self: end;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .grid-toggle-switch {
+      background-color: var(--main-secondary);
+
+      &:hover {
+        background-color: var(--main-dark);
+      }
+
+      &::after {
+        background-color: var(--main-primary);
+
+        transition: transform 0.2s ease, background-color 0.1s ease;
+        transform: translateX(var(--x, 0));
+      }
+    }
+
+    label {
+      font-size: 1rem;
+      color: var(--main-primary);
+      font-weight: 600;
+    }
+  }
+}
+
+#color-picker {
+  appearance: none;
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background-color 150ms ease;
+  padding: 0.5rem;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/eyedropper.svg");
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg)
+      brightness(94%) contrast(67%);
+
+    transition: filter 100ms ease;
+  }
+
+  &:hover,
+  &:checked {
+    background-color: var(--text-field);
+
+    &::before {
+      filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg)
+        brightness(91%) contrast(81%);
+    }
+  }
 }
 
 /*==================
@@ -291,16 +458,20 @@ button {
 .right-side {
   padding: 0 2.9375rem;
   display: grid;
-  grid-template-rows: 1fr 22.5rem 1fr;
+  // grid-template-rows: 1fr 22.5rem 1fr;
+  grid-template-rows: 8.125rem 22.5rem 1fr;
   justify-items: center;
   align-items: center;
   flex: 1;
 
+  user-select: none;
+
   .title {
     color: var(--main-primary);
-    font-size: 4.375rem;
+    font-size: 3.5rem;
     font-weight: 800;
     text-align: center;
+    align-self: start;
   }
 
   .canvas-container {
@@ -308,6 +479,17 @@ button {
     width: 22.5rem;
     background-color: white;
     display: grid;
+
+    div {
+      border: 0px solid transparent;
+      cursor: crosshair;
+    }
+  }
+
+  .outline-grid {
+    .grid-div {
+      border: 1px solid rgb(225, 225, 225);
+    }
   }
 
   .grid-clear {
@@ -318,5 +500,13 @@ button {
     border-radius: 13px;
     border: none;
     background-color: var(--hightlight-btn);
+    align-self: end;
+    cursor: pointer;
+
+    transition: opacity 150ms ease;
+
+    &:hover {
+      opacity: 0.75;
+    }
   }
 }

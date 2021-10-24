@@ -32,11 +32,32 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: background-color 250ms ease, border-color 250ms ease, color 250ms ease;
 }
 
 body {
   background-color: var(--main-bg);
   font-family: "Poppins", sans-serif;
+}
+
+body.dark .settings .draw-change-div input[type="radio"]::before {
+  filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg) brightness(91%) contrast(81%);
+}
+
+body.dark .settings .draw-change-div input[type="radio"]:hover::before {
+  filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg) brightness(94%) contrast(67%);
+}
+
+body.dark .settings .draw-change-div input[type="radio"]:checked::before {
+  filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg) brightness(94%) contrast(67%);
+}
+
+body.dark #color-picker::before {
+  filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg) brightness(91%) contrast(81%);
+}
+
+body.dark #color-picker:hover::before, body.dark #color-picker:checked::before {
+  filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg) brightness(94%) contrast(67%);
 }
 
 main {
@@ -56,18 +77,15 @@ button {
 .left-side {
   padding: 0 1.25rem;
   display: grid;
-  grid-template-rows: 1fr 22.5rem 1fr;
+  grid-template-rows: 8.125rem 22.5rem 1fr;
   border-right: 1px solid var(--main-secondary);
 }
 
-.left-side .dark-mode-switch {
-  --toggle-color: #51473a;
-  --back-side-color: #cbbdac;
-  --hover-back-side-color: #998d7f;
+.left-side .dark-mode-switch,
+.left-side .grid-toggle-switch {
   appearance: none;
   width: 4.25rem;
   height: 2.125rem;
-  background-color: var(--back-side-color);
   border-radius: 5rem;
   align-self: flex-start;
   position: relative;
@@ -75,19 +93,37 @@ button {
   transition: background-color 0.15s ease;
 }
 
-.left-side .dark-mode-switch:hover {
-  background-color: var(--hover-back-side-color);
-}
-
-.left-side .dark-mode-switch::after {
+.left-side .dark-mode-switch::after,
+.left-side .grid-toggle-switch::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 50%;
   height: 100%;
-  background-color: var(--toggle-color);
   border-radius: 50%;
+  transform: translateX(var(--x, 0));
+}
+
+.left-side .dark-mode-switch:checked,
+.left-side .grid-toggle-switch:checked {
+  --x: 100%;
+}
+
+.left-side .dark-mode-switch {
+  --toggle-color: #51473a;
+  --back-side-color: #cbbdac;
+  --hover-back-side-color: #998d7f;
+  margin-top: 1.3rem;
+  background-color: var(--back-side-color);
+}
+
+.left-side .dark-mode-switch:hover {
+  background-color: var(--hover-back-side-color);
+}
+
+.left-side .dark-mode-switch::after {
+  background-color: var(--toggle-color);
   background-image: url("/images/Dark Toggle.svg");
   background-size: 60%;
   background-position: center;
@@ -97,7 +133,6 @@ button {
 }
 
 .left-side .dark-mode-switch:checked {
-  --x: 100%;
   --toggle-color: #d8cbb9;
   --back-side-color: #5e5345;
   --hover-back-side-color: #6f655a;
@@ -139,6 +174,12 @@ button {
   width: 5.25rem;
   height: 5.25rem;
   border-radius: 50%;
+  cursor: pointer;
+  transition: border 150ms ease;
+}
+
+.left-side .settings .color-change-div label.picker:hover {
+  border: 6px solid var(--main-dark);
 }
 
 .left-side .settings .color-change-div input[type="color"] {
@@ -165,43 +206,76 @@ button {
   color: var(--main-secondary);
 }
 
+.left-side .settings .color-change-div .seperation-div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
 .left-side .settings .draw-change-div {
   display: flex;
   gap: 1.125rem;
+  position: relative;
 }
 
-.left-side .settings .draw-change-div button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border-radius: 1rem;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
+.left-side .settings .draw-change-div input[type="radio"] {
+  appearance: none;
   width: 4rem;
   height: 4rem;
+  position: relative;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.left-side .settings .draw-change-div button img {
-  width: 2.5rem;
-  height: 2.5rem;
+.left-side .settings .draw-change-div input[type="radio"]::before {
+  content: "";
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 2.8rem;
+  height: 2.8rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
   filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg) brightness(94%) contrast(67%);
   transition: filter 0.2s;
 }
 
-.left-side .settings .draw-change-div button img.lower {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-35%);
-}
-
-.left-side .settings .draw-change-div button:hover {
-  background-color: white;
-}
-
-.left-side .settings .draw-change-div button:hover img {
+.left-side .settings .draw-change-div input[type="radio"]:hover::before {
   filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg) brightness(91%) contrast(81%);
+}
+
+.left-side .settings .draw-change-div input[type="radio"]:checked::before {
+  filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg) brightness(91%) contrast(81%);
+}
+
+.left-side .settings .draw-change-div #drawRadio::before {
+  background-image: url("/images/lead-pencil.svg");
+}
+
+.left-side .settings .draw-change-div #eraseRadio::before {
+  background-image: url("/images/eraser.svg");
+}
+
+.left-side .settings .draw-change-div #fillRadio::before {
+  background-image: url("/images/format-color-fill.svg");
+  top: 0.4rem;
+}
+
+.left-side .settings .background-div {
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--text-field);
+  border-radius: 1rem;
+  position: absolute;
+  top: 0;
+  transform: translateX(0);
+  transition: transform 250ms cubic-bezier(0.57, 0.05, 0.04, 1.51);
 }
 
 .left-side .settings .change-grid-div {
@@ -263,23 +337,88 @@ button {
   color: var(--main-secondary);
 }
 
+.left-side .grid-toggle {
+  align-self: end;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.left-side .grid-toggle .grid-toggle-switch {
+  background-color: var(--main-secondary);
+}
+
+.left-side .grid-toggle .grid-toggle-switch:hover {
+  background-color: var(--main-dark);
+}
+
+.left-side .grid-toggle .grid-toggle-switch::after {
+  background-color: var(--main-primary);
+  transition: transform 0.2s ease, background-color 0.1s ease;
+  transform: translateX(var(--x, 0));
+}
+
+.left-side .grid-toggle label {
+  font-size: 1rem;
+  color: var(--main-primary);
+  font-weight: 600;
+}
+
+#color-picker {
+  appearance: none;
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background-color 150ms ease;
+  padding: 0.5rem;
+  position: relative;
+}
+
+#color-picker::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/eyedropper.svg");
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: invert(98%) sepia(3%) saturate(3072%) hue-rotate(315deg) brightness(94%) contrast(67%);
+  transition: filter 100ms ease;
+}
+
+#color-picker:hover, #color-picker:checked {
+  background-color: var(--text-field);
+}
+
+#color-picker:hover::before, #color-picker:checked::before {
+  filter: invert(25%) sepia(2%) saturate(5994%) hue-rotate(354deg) brightness(91%) contrast(81%);
+}
+
 /*==================
   === Right Side ===
   ==================*/
 .right-side {
   padding: 0 2.9375rem;
   display: grid;
-  grid-template-rows: 1fr 22.5rem 1fr;
+  grid-template-rows: 8.125rem 22.5rem 1fr;
   justify-items: center;
   align-items: center;
   flex: 1;
+  user-select: none;
 }
 
 .right-side .title {
   color: var(--main-primary);
-  font-size: 4.375rem;
+  font-size: 3.5rem;
   font-weight: 800;
   text-align: center;
+  align-self: start;
 }
 
 .right-side .canvas-container {
@@ -287,6 +426,15 @@ button {
   width: 22.5rem;
   background-color: white;
   display: grid;
+}
+
+.right-side .canvas-container div {
+  border: 0px solid transparent;
+  cursor: crosshair;
+}
+
+.right-side .outline-grid .grid-div {
+  border: 1px solid #e1e1e1;
 }
 
 .right-side .grid-clear {
@@ -297,5 +445,12 @@ button {
   border-radius: 13px;
   border: none;
   background-color: var(--hightlight-btn);
+  align-self: end;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.right-side .grid-clear:hover {
+  opacity: 0.75;
 }
 /*# sourceMappingURL=style.css.map */

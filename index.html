@@ -25,18 +25,24 @@
           <div class="color-change-div">
             <label class="picker" for="change-color"></label>
             <input type="color" name="color-picker" id="change-color" value="#174461">
-            <input type="text" name="hex-code" placeholder="#174461" maxlength="7">
+            <div class="seperation-div">
+              <input type="text" name="hex-code" placeholder="#174461" maxlength="7">
+              <input type="checkbox" name="color-picker" id="color-picker">
+            </div>
           </div>
         </div>
 
         <!-- Change drawing mode -->
         <div class="settings">
           <label>Change Drawing mode</label>
-          <div class="background-div"></div>
-          <div class="draw-change-div">
-            <button><img src="/images/lead-pencil.svg" alt=""></button>
+          <div class="draw-change-div shrink-n-grow">
+            <div class="background-div"></div>
+            <input type="radio" name="changeMode" id="drawRadio" data-mode="draw" checked>
+            <input type="radio" name="changeMode" id="eraseRadio" data-mode="erase">
+            <input type="radio" name="changeMode" id="fillRadio" data-mode="fill">
+            <!-- <button><img src="/images/lead-pencil.svg" alt=""></button>
             <button><img src="/images/eraser.svg" alt=""></button>
-            <button><img class="lower" src="/images/format-color-fill.svg" alt=""></button>
+            <button><img class="lower" src="/images/format-color-fill.svg" alt=""></button> -->
           </div>
         </div>
 
@@ -50,6 +56,12 @@
         </div>
 
       </div>
+
+      <div class="grid-toggle">
+        <input id="grid-toggle" type="checkbox" class="grid-toggle-switch">
+        <label for="grid-toggle">Toggle Grid</label>
+      </div>
+
     </div>
 
     <!-- Right side of the page (editor stuff) -->
