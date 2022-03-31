@@ -32,7 +32,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  transition: background-color 250ms ease, border-color 250ms ease, color 250ms ease;
+  transition: background-color 250ms ease, border-color 250ms ease,
+ color 250ms ease;
 }
 
 body {
@@ -124,11 +125,12 @@ button {
 
 .left-side .dark-mode-switch::after {
   background-color: var(--toggle-color);
-  background-image: url("/images/Dark Toggle.svg");
+  background-image: url("images/Dark Toggle.svg");
   background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
-  transition: transform 0.2s ease, background-color 0.1s ease, background-image 0.15s ease;
+  transition: transform 0.2s ease, background-color 0.1s ease,
+ background-image 0.15s ease;
   transform: translateX(var(--x, 0));
 }
 
@@ -139,7 +141,7 @@ button {
 }
 
 .left-side .dark-mode-switch:checked::after {
-  background-image: url("/images/Light Toggle.svg");
+  background-image: url("images/Light Toggle.svg");
 }
 
 .left-side .editor-settings {
@@ -255,15 +257,15 @@ button {
 }
 
 .left-side .settings .draw-change-div #drawRadio::before {
-  background-image: url("/images/lead-pencil.svg");
+  background-image: url("images/lead-pencil.svg");
 }
 
 .left-side .settings .draw-change-div #eraseRadio::before {
-  background-image: url("/images/eraser.svg");
+  background-image: url("images/eraser.svg");
 }
 
 .left-side .settings .draw-change-div #fillRadio::before {
-  background-image: url("/images/format-color-fill.svg");
+  background-image: url("images/format-color-fill.svg");
   top: 0.4rem;
 }
 
@@ -384,7 +386,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/images/eyedropper.svg");
+  background-image: url("images/eyedropper.svg");
   background-size: 80%;
   background-position: center;
   background-repeat: no-repeat;
